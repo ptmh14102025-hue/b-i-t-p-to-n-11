@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phiếu Kiểm Tra Trực Tuyến - Toán 11 (20 Câu Trắc Nghiệm)</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --danger: #dc2626;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 12px;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .wrapper {
+      max-width: 880px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 24px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .alert-banner {
+      display: none;
+      background: #fef2f2;
+      border-left: 5px solid var(--danger);
+      color: #991b1b;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      position: sticky;
+      top: 10px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .exam-header {
+      text-align: center;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .exam-header h2 {
+      margin: 0 0 6px 0;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      font-size: 21px;
+    }
+    .info-bar {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+      background: #f1f5f9;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .info-bar input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+    .card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      background: #ffffff;
+    }
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .badge-nb { background: #e0f2fe; color: #0369a1; }
+    .badge-th { background: #fef3c7; color: #b45309; }
+    .badge-vd { background: #fee2e2; color: #b91c1c; }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (max-width: 600px) {
+      .options-grid, .info-bar { grid-template-columns: 1fr; }
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      font-size: 14.5px;
+    }
+    .opt-label:hover { background: #e0f2fe; }
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      padding: 14px;
+      font-size: 17px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--primary-dark); }
+    .result-modal {
+      display: none;
+      margin-top: 20px;
+      background: #f0fdf4;
+      border: 1px solid #22c55e;
+      color: #15803d;
+      padding: 18px;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+
+  <!-- Cấu hình MathJax render trực tiếp công thức LaTeX -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="wrapper">
+  <div id="alertBox" class="alert-banner">
+    ⚠️ CẢNH BÁO: Phát hiện thao tác rời màn hình hoặc chụp ảnh! Hệ thống đã ghi nhận vi phạm.
+  </div>
+
+  <div class="exam-header">
+    <h2>BÀI KIỂM TRA ĐÁNH GIÁ NĂNG LỰC TOÁN 11</h2>
+    <div style="color: #64748b; font-size: 14px;">Chủ đề: Lượng Giác | Thời lượng: 45 phút (GDPT 2018)</div>
+  </div>
+
+  <div class="info-bar">
+    <div>
+      <label><b>Họ và tên học sinh (*):</b></label>
+      <input type="text" id="hoTen" placeholder="Nhập đầy đủ họ và tên...">
+    </div>
+    <div>
+      <label><b>Lớp (*):</b></label>
+      <input type="text" id="lop" placeholder="Ví dụ: 11A2">
+    </div>
+  </div>
+
+  <form id="quizForm">
+    <!-- CÂU 1 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 1. Với mọi góc lượng giác $\alpha$, đẳng thức nào sau đây luôn đúng?</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q1" value="A"> A. $\sin^2 \alpha + \cos^2 \alpha = 1$</label>
+        <label class="opt-label"><input type="radio" name="q1" value="B"> B. $\sin^2 \alpha - \cos^2 \alpha = 1$</label>
+        <label class="opt-label"><input type="radio" name="q1" value="C"> C. $\sin \alpha + \cos \alpha = 1$</label>
+        <label class="opt-label"><input type="radio" name="q1" value="D"> D. $\tan \alpha = \frac{\cos \alpha}{\sin \alpha}$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 2 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 2. Cho góc lượng giác $\alpha$ thỏa mãn $\frac{\pi}{2} < \alpha < \pi$. Khẳng định nào sau đây là đúng?</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q2" value="A"> A. $\sin \alpha > 0$ và $\cos \alpha > 0$</label>
+        <label class="opt-label"><input type="radio" name="q2" value="B"> B. $\sin \alpha > 0$ và $\cos \alpha < 0$</label>
+        <label class="opt-label"><input type="radio" name="q2" value="C"> C. $\sin \alpha < 0$ và $\cos \alpha > 0$</label>
+        <label class="opt-label"><input type="radio" name="q2" value="D"> D. $\sin \alpha < 0$ và $\cos \alpha < 0$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 3 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 3. Với hai góc $a$ và $b$ bất kì, công thức cộng nào sau đây đúng?</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q3" value="A"> A. $\cos\left( a - b \right) = \cos a \cos b - \sin a \sin b$</label>
+        <label class="opt-label"><input type="radio" name="q3" value="B"> B. $\cos\left( a - b \right) = \cos a \cos b + \sin a \sin b$</label>
+        <label class="opt-label"><input type="radio" name="q3" value="C"> C. $\sin\left( a - b \right) = \sin a \cos b + \cos a \sin b$</label>
+        <label class="opt-label"><input type="radio" name="q3" value="D"> D. $\cos\left( a + b \right) = \cos a \cos b + \sin a \sin b$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 4 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 4. Cho góc lượng giác $a$ bất kì. Khẳng định nào sau đây là đúng?</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q4" value="A"> A. $\cos\left( 2a \right) = 2\cos^2 a - 1$</label>
+        <label class="opt-label"><input type="radio" name="q4" value="B"> B. $\cos\left( 2a \right) = 2\sin^2 a - 1$</label>
+        <label class="opt-label"><input type="radio" name="q4" value="C"> C. $\sin\left( 2a \right) = \sin a \cos a$</label>
+        <label class="opt-label"><input type="radio" name="q4" value="D"> D. $\cos\left( 2a \right) = \cos^2 a + \sin^2 a$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 5 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 5. Tập xác định $\mathcal{D}$ của hàm số lượng giác $y = \tan x$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q5" value="A"> A. $\mathcal{D} = \mathbb{R} \setminus \left\{ k\pi \mid k \in \mathbb{Z} \right\}$</label>
+        <label class="opt-label"><input type="radio" name="q5" value="B"> B. $\mathcal{D} = \mathbb{R} \setminus \left\{ \frac{\pi}{2} + k\pi \mid k \in \mathbb{Z} \right\}$</label>
+        <label class="opt-label"><input type="radio" name="q5" value="C"> C. $\mathcal{D} = \mathbb{R}$</label>
+        <label class="opt-label"><input type="radio" name="q5" value="D"> D. $\mathcal{D} = \left[ -1; 1 \right]$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 6 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 6. Chu kì tuần hoàn của hàm số $y = \cos x$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q6" value="A"> A. $\pi$</label>
+        <label class="opt-label"><input type="radio" name="q6" value="B"> B. $2\pi$</label>
+        <label class="opt-label"><input type="radio" name="q6" value="C"> C. $\frac{\pi}{2}$</label>
+        <label class="opt-label"><input type="radio" name="q6" value="D"> D. $4\pi$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 7 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 7. Tất cả các nghiệm của phương trình lượng giác $\sin x = 0$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q7" value="A"> A. $x = k\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q7" value="B"> B. $x = \frac{\pi}{2} + k\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q7" value="C"> C. $x = k2\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q7" value="D"> D. $x = \frac{\pi}{2} + k2\pi \left( k \in \mathbb{Z} \right)$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 8 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-nb">NB</span>Câu 8. Nghiệm của phương trình $\cos x = \cos \alpha$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q8" value="A"> A. $x = \pm \alpha + k2\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q8" value="B"> B. $x = \pm \alpha + k\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q8" value="C"> C. $x = \alpha + k2\pi$ hoặc $x = \pi - \alpha + k2\pi$</label>
+        <label class="opt-label"><input type="radio" name="q8" value="D"> D. $x = \alpha + k\pi$ hoặc $x = \pi - \alpha + k\pi$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 9 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-th">TH</span>Câu 9. Cho góc $\alpha$ thỏa $\frac{\pi}{2} < \alpha < \pi$ và $\sin \alpha = \frac{3}{5}$. Giá trị của $\cos \alpha$ bằng:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q9" value="A"> A. $\frac{4}{5}$</label>
+        <label class="opt-label"><input type="radio" name="q9" value="B"> B. $-\frac{4}{5}$</label>
+        <label class="opt-label"><input type="radio" name="q9" value="C"> C. $\frac{16}{25}$</label>
+        <label class="opt-label"><input type="radio" name="q9" value="D"> D. $-\frac{16}{25}$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 10 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-th">TH</span>Câu 10. Rút gọn biểu thức $P = \sin\left( \pi - \alpha \right) + \cos\left( \frac{\pi}{2} - \alpha \right)$ ta được:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q10" value="A"> A. $P = 0$</label>
+        <label class="opt-label"><input type="radio" name="q10" value="B"> B. $P = 2\sin \alpha$</label>
+        <label class="opt-label"><input type="radio" name="q10" value="C"> C. $P = 2\cos \alpha$</label>
+        <label class="opt-label"><input type="radio" name="q10" value="D"> D. $P = \sin \alpha - \cos \alpha$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 11 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-th">TH</span>Câu 11. Biết $\sin a = \frac{1}{3}$. Giá trị của biểu thức $\cos\left( 2a \right)$ bằng:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q11" value="A"> A. $\frac{7}{9}$</label>
+        <label class="opt-label"><input type="radio" name="q11" value="B"> B. $-\frac{7}{9}$</label>
+        <label class="opt-label"><input type="radio" name="q11" value="C"> C. $\frac{2}{3}$</label>
+        <label class="opt-label"><input type="radio" name="q11" value="D"> D. $\frac{8}{9}$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 12 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-th">TH</span>Câu 12. Giá trị lớn nhất $M$ và giá trị nhỏ nhất $m$ của hàm số $y = 3\sin x - 2$ lần lượt là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q12" value="A"> A. $M = 1; m = -5$</label>
+        <label class="opt-label"><input type="radio" name="q12" value="B"> B. $M = 3; m = -3$</label>
+        <label class="opt-label"><input type="radio" name="q12" value="C"> C. $M = 5; m = -1$</label>
+        <label class="opt-label"><input type="radio" name="q12" value="D"> D. $M = 1; m = -2$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 13 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-th">TH</span>Câu 13. Tất cả các nghiệm của phương trình $\cos x = -\frac{1}{2}$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q13" value="A"> A. $x = \pm \frac{\pi}{3} + k2\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q13" value="B"> B. $x = \pm \frac{2\pi}{3} + k2\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q13" value="C"> C. $x = \pm \frac{2\pi}{3} + k\pi \left( k \in \mathbb{Z} \right)$</label>
+        <label class="opt-label"><input type="radio" name="q13" value="D"> D. $x = \pm \frac{5\pi}{6} + k2\pi \left( k \in \mathbb{Z} \right)$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 14 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-th">TH</span>Câu 14. Số nghiệm của phương trình $\sin\left( x + \frac{\pi}{4} \right) = 1$ thuộc đoạn $\left[ 0; 2\pi \right]$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q14" value="A"> A. 1</label>
+        <label class="opt-label"><input type="radio" name="q14" value="B"> B. 2</label>
+        <label class="opt-label"><input type="radio" name="q14" value="C"> C. 0</label>
+        <label class="opt-label"><input type="radio" name="q14" value="D"> D. 3</label>
+      </div>
+    </div>
+
+    <!-- CÂU 15 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-vd">VD</span>Câu 15. Cho $\tan \alpha = 2$. Tính giá trị của biểu thức $A = \frac{3\sin \alpha - 2\cos \alpha}{5\sin \alpha + 4\cos \alpha}$:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q15" value="A"> A. $\frac{2}{7}$</label>
+        <label class="opt-label"><input type="radio" name="q15" value="B"> B. $\frac{4}{7}$</label>
+        <label class="opt-label"><input type="radio" name="q15" value="C"> C. $\frac{2}{9}$</label>
+        <label class="opt-label"><input type="radio" name="q15" value="D"> D. $\frac{1}{3}$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 16 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-vd">VD</span>Câu 16. Rút gọn biểu thức $M = \sin^4 \alpha + \cos^4 \alpha + 2\sin^2 \alpha \cos^2 \alpha - 1$:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q16" value="A"> A. $M = 1$</label>
+        <label class="opt-label"><input type="radio" name="q16" value="B"> B. $M = 0$</label>
+        <label class="opt-label"><input type="radio" name="q16" value="C"> C. $M = -1$</label>
+        <label class="opt-label"><input type="radio" name="q16" value="D"> D. $M = 2\sin^2 \alpha$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 17 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-vd">VD</span>Câu 17. Rút gọn biểu thức $S = \frac{\sin\left( 2x \right) + \sin x}{1 + \cos\left( 2x \right) + \cos x}$ trên tập xác định:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q17" value="A"> A. $\tan x$</label>
+        <label class="opt-label"><input type="radio" name="q17" value="B"> B. $\cot x$</label>
+        <label class="opt-label"><input type="radio" name="q17" value="C"> C. $\sin x$</label>
+        <label class="opt-label"><input type="radio" name="q17" value="D"> D. $\cos x$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 18 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-vd">VD</span>Câu 18. Tìm tập xác định $\mathcal{D}$ của hàm số $y = \sqrt{\cos x - 1}$:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q18" value="A"> A. $\mathcal{D} = \mathbb{R}$</label>
+        <label class="opt-label"><input type="radio" name="q18" value="B"> B. $\mathcal{D} = \left\{ k2\pi \mid k \in \mathbb{Z} \right\}$</label>
+        <label class="opt-label"><input type="radio" name="q18" value="C"> C. $\mathcal{D} = \left\{ \frac{\pi}{2} + k\pi \mid k \in \mathbb{Z} \right\}$</label>
+        <label class="opt-label"><input type="radio" name="q18" value="D"> D. $\mathcal{D} = \emptyset$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 19 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-vd">VD</span>Câu 19. Đu quay có trục cách đất $25\,\mathrm{m}$, bán kính $20\,\mathrm{m}$, quay 1 vòng hết 60s. Độ cao $h\left( t \right) = 25 - 20\cos\left( \frac{\pi}{30}t \right)\text{ (m)}$. Thời điểm đầu tiên cabin đạt độ cao $35\,\mathrm{m}$ là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q19" value="A"> A. $t = 10\text{ giây}$</label>
+        <label class="opt-label"><input type="radio" name="q19" value="B"> B. $t = 20\text{ giây}$</label>
+        <label class="opt-label"><input type="radio" name="q19" value="C"> C. $t = 15\text{ giây}$</label>
+        <label class="opt-label"><input type="radio" name="q19" value="D"> D. $t = 30\text{ giây}$</label>
+      </div>
+    </div>
+
+    <!-- CÂU 20 -->
+    <div class="card">
+      <div class="card-title"><span class="badge badge-vd">VD</span>Câu 20. Khoảng cách đỉnh piston trong xilanh dung tích $0,002\,\mathrm{m}^3$ dao động theo $x\left( t \right) = 12 + 6\sin\left( 100\pi t \right)\text{ (cm)}$. Khoảng cách ngắn nhất từ đỉnh piston đến đáy là:</div>
+      <div class="options-grid">
+        <label class="opt-label"><input type="radio" name="q20" value="A"> A. $6\,\mathrm{cm}$</label>
+        <label class="opt-label"><input type="radio" name="q20" value="B"> B. $12\,\mathrm{cm}$</label>
+        <label class="opt-label"><input type="radio" name="q20" value="C"> C. $18\,\mathrm{cm}$</label>
+        <label class="opt-label"><input type="radio" name="q20" value="D"> D. $0\,\mathrm{cm}$</label>
+      </div>
+    </div>
+
+    <button type="button" class="btn-submit" onclick="submitQuiz()">NỘP BÀI KIỂM TRA</button>
+  </form>
+
+  <div id="resultModal" class="result-modal">
+    <h3 style="margin-top:0;">KẾT QUẢ KIỂM TRA ĐÃ ĐƯỢC LƯU</h3>
+    <div id="displayInfo" style="font-size: 16px; margin-bottom: 6px;"></div>
+    <div id="displayScore" style="font-size: 24px; font-weight: bold; color: var(--primary);"></div>
+    <div id="displayViolations" style="font-size: 14px; color: #b91c1c; margin-top: 4px;"></div>
+    <div id="syncStatus" style="font-size: 13px; color: #64748b; margin-top: 6px;"></div>
+  </div>
+</div>
+
+<script>
+  // Dán Web App URL của Google Apps Script tại đây
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTaZW6pHxtI9KLnXCLofS1TDZIz4L-N6k4RyS9dy_fjjeWP1YGJ8C8cpiw5M1Zp1Lk/exec";
+
+  let violations = 0;
+  const alertBox = document.getElementById('alertBox');
+
+  function triggerViolation(reason) {
+    violations++;
+    alertBox.style.display = 'block';
+    alertBox.innerText = `⚠️ CẢNH BÁO (${violations} lần): ${reason}`;
+    setTimeout(() => { alertBox.style.display = 'none'; }, 4000);
+  }
+
+  // Chống chuyển tab / mất tiêu điểm
+  window.addEventListener('blur', () => {
+    triggerViolation('Học sinh vừa chuyển tab hoặc rời màn hình làm bài!');
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      triggerViolation('Học sinh vừa rời khỏi ứng dụng kiểm tra!');
+    }
+  });
+
+  // Chống phím tắt chụp màn hình & sao chép
+  window.addEventListener('keyup', (e) => {
+    if (e.key === 'PrintScreen') {
+      triggerViolation('Phát hiện thao tác chụp màn hình (PrintScreen)!');
+      navigator.clipboard.writeText('');
+    }
+  });
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 's' || e.key === 'u' || e.key === 'c')) {
+      e.preventDefault();
+      triggerViolation('Thao tác phím tắt bị vô hiệu hóa trong phòng thi!');
+    }
+  });
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  function submitQuiz() {
+    const hoTen = document.getElementById('hoTen').value.trim();
+    const lop = document.getElementById('lop').value.trim();
+
+    if (!hoTen || !lop) {
+      alert("Vui lòng điền đầy đủ Họ và tên cùng Lớp học trước khi nộp bài!");
+      return;
+    }
+
+    // Đáp án 20 câu trắc nghiệm (mỗi câu 0,5 điểm)
+    const answers = {
+      q1: "A", q2: "B", q3: "B", q4: "A", q5: "B",
+      q6: "B", q7: "A", q8: "A", q9: "B", q10: "B",
+      q11: "A", q12: "A", q13: "B", q14: "A", q15: "A",
+      q16: "B", q17: "A", q18: "B", q19: "B", q20: "A"
+    };
+
+    let score = 0;
+    for (let q in answers) {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      if (selected && selected.value === answers[q]) {
+        score += 0.5;
+      }
+    }
+
+    const totalScore = score.toFixed(1);
+    const submitTime = new Date().toLocaleString('vi-VN');
+
+    document.getElementById('displayInfo').innerText = `Học sinh: ${hoTen} - Lớp: ${lop} | Thời gian: ${submitTime}`;
+    document.getElementById('displayScore').innerText = `Điểm bài làm: ${totalScore} / 10,0 Điểm`;
+    document.getElementById('displayViolations').innerText = `Số lần cảnh báo vi phạm (chuyển tab/chụp màn hình): ${violations} lần`;
+    document.getElementById('resultModal').style.display = 'block';
+
+    if (GOOGLE_SCRIPT_URL) {
+      document.getElementById('syncStatus').innerText = "Đang gửi dữ liệu bài làm về Google Sheets...";
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          thoiGian: submitTime,
+          hoTen: hoTen,
+          lop: lop,
+          tongDiem: totalScore,
+          soLanViPham: violations
+        })
+      }).then(() => {
+        document.getElementById('syncStatus').innerText = "✓ Kết quả đã được tự động lưu vào bảng theo dõi của giáo viên!";
+        document.getElementById('syncStatus').style.color = "#15803d";
+      }).catch(() => {
+        document.getElementById('syncStatus').innerText = "Không thể kết nối máy chủ. Vui lòng chụp màn hình điểm số.";
+      });
+    } else {
+      document.getElementById('syncStatus').innerText = "(Chưa gắn URL Google Sheets: Học sinh chụp lại màn hình nộp cho giáo viên)";
+    }
+
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
